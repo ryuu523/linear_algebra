@@ -1,5 +1,7 @@
 # 動作させるためには？
 
-・このフォルダの直下でnpm installをします
-・次に、npm startと打ちます
-・localhost:3000にwebでアクセスすると見れます
+・このフォルダの直下で `npm install`をします
+
+・次に、`npm start`と打ちます
+
+・`localhost:3000`にwebでアクセスすると見れます
