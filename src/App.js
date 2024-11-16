@@ -40,7 +40,7 @@ function App() {
 
   const selectColor = (e) => {
     const colors = Array.from(e.target.closest(".colorPalette").children);
-    colors.foreach((color, i) => {
+    colors.forEach((color, i) => {
       if (color.style.backgroundColor === e.target.style.backgroundColor) {
         color.style.border = "2px solid rgb(0, 123, 255)";
       } else {
