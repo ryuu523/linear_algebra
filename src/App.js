@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import './App.css';
 import DrawField from './components/DrawField';
 import ColorPalette from './components/ColorPalette';
@@ -25,23 +25,23 @@ function App() {
     "rgb(255, 255, 255)"
   ];
 
-  const createField = () => {
+  const createField = useCallback(() => {
     setField([...new Array(Number(fieldHeight))].map((_, y) =>
-      [...new Array(Number(fieldWidth))].map((_,x)=>{
-        if(x==fieldOrigin.x-1&&y==fieldOrigin.y-1){
+      [...new Array(Number(fieldWidth))].map((_, x) => {
+        if (x === fieldOrigin.x - 1 && y === fieldOrigin.y - 1) {
           return "red"
         }
-        else{
+        else {
           return "white"
         }
       })
     ));
-  };
+  },[fieldHeight,fieldWidth,fieldOrigin.x,fieldOrigin.y]);
 
   const selectColor = (e) => {
     const colors = Array.from(e.target.closest(".colorPalette").children);
-    colors.map((color, i) => {
-      if (color.style.backgroundColor == e.target.style.backgroundColor) {
+    colors.foreach((color, i) => {
+      if (color.style.backgroundColor === e.target.style.backgroundColor) {
         color.style.border = "2px solid rgb(0, 123, 255)";
       } else {
         color.style.border = "2px solid black";
@@ -57,16 +57,16 @@ function App() {
         let matx = procession.row2.col1 * (y - Number(fieldOrigin.y) + 1) + procession.row2.col2 * (x - Number(fieldOrigin.x) + 1)
         return ({ x: matx, y: maty })
       }))
-      
+
     setField((prev) => {
       const newField = [...new Array(Number(fieldHeight))].map((_, y) =>
         [...new Array(Number(fieldWidth))].fill("white"))
       array.forEach((row, y) => {
         row.forEach((n, x) => {
-          if (n.x + Number(fieldOrigin.x )- 1 > (Number(fieldWidth) - 1) || n.y + Number(fieldOrigin.y) - 1 > (Number(fieldHeight) - 1) || n.x + Number(fieldOrigin.x) - 1 < 0 || n.y + Number(fieldOrigin.y) - 1 < 0) {
+          if (n.x + Number(fieldOrigin.x) - 1 > (Number(fieldWidth) - 1) || n.y + Number(fieldOrigin.y) - 1 > (Number(fieldHeight) - 1) || n.x + Number(fieldOrigin.x) - 1 < 0 || n.y + Number(fieldOrigin.y) - 1 < 0) {
           }
           else {
-            newField[n.y+Number(fieldOrigin.y)-1][n.x+Number(fieldOrigin.x)-1] = prev[y][x ]
+            newField[n.y + Number(fieldOrigin.y) - 1][n.x + Number(fieldOrigin.x) - 1] = prev[y][x]
           }
         })
       });
@@ -86,7 +86,7 @@ function App() {
 
   useEffect(() => {
     createField();
-  }, []);
+  }, [createField]);
 
   return (
     <div>
